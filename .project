@@ -14,4 +14,16 @@
 	<natures>
 		<nature>org.eclipse.jdt.core.javanature</nature>
 	</natures>
+	<linkedResources>
+		<link>
+			<name>gwt-unitCache</name>
+			<type>2</type>
+			<locationURI>PROJECT_LOC/MentorFinder/gwt-unitCache</locationURI>
+		</link>
+		<link>
+			<name>war</name>
+			<type>2</type>
+			<locationURI>PROJECT_LOC/MentorFinder/war</locationURI>
+		</link>
+	</linkedResources>
 </projectDescription>

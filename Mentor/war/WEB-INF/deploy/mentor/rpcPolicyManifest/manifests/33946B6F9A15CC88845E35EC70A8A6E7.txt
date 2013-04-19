@@ -1,0 +1,2 @@
+serviceClass: mentor.client.GreetingService
+path: 78BDD55465502284809021B2B2D68453.gwt.rpc
