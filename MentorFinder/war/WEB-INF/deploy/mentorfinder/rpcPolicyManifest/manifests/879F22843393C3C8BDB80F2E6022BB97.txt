@@ -1,2 +1,0 @@
-serviceClass: mentorfinder.client.GreetingService
-path: 6D88BFA1FE81C0DD28BA405FA140DC11.gwt.rpc
