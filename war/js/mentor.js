@@ -8,11 +8,13 @@ function onLinkedInLoad() {
 }
 
 //Authorization
+
 function onLinkedInAuth() {
 	  IN.API.Connections("me")
 	    .fields("firstName", "lastName", "industry")
+	    .params({"start": 0, "count": 15}) // start begins at 0
 	    .result(displayConnections)
-	    .error(displayConnectionsErrors);
+	    .error(displayConnectionErrors);
 	}
 
 // Connections
@@ -24,6 +26,21 @@ function displayConnections(connections) {
 	    connectionsDiv.innerHTML += "<p>" + members[member].firstName + " " + members[member].lastName
 	      + " works in the " + members[member].industry + " industry";
 	  }     
+	}
+
+
+function setConnections(connections) {
+	  var profileDiv = document.getElementById("connections");
+
+	  var start = connections._start + 1; // because humans count from 1, not 0.
+	  var range = connections._start + connections._count;
+	  connectionsDiv.innerHTML = "<p>Displaying " + start + "-" + range + " of " + connections._total + " connections.</p>";
+
+	  var members = connections.values;
+	  for (var member in members) {
+	    profileDiv.innerHTML += "<p>" + members[member].firstName + " " + members[member].lastName
+	      + " works in the " + members[member].industry + " industry.</p>";
+	  }
 	}
 
 
