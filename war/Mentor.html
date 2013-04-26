@@ -6,6 +6,13 @@
 
 <html>
   <head>
+   <script  type="text/javascript" src="js/mentor.js"> </script>
+    <script type="text/javascript" src="http://platform.linkedin.com/in.js">
+    api_key: 4ufrzwhkcycp 
+    onLoad: onLinkedInLoad
+authorize: true
+    </script>
+   
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
 
     <!--                                                               -->
@@ -62,21 +69,12 @@
     
    <!--     LinkedIn stuff goes here. -->
 
-  <script type="text/javascript" src="http://platform.linkedin.com/in.js">
-  api_key: 4ufrzwhkcycp 
-  onLoad: onLinkedInLoad
-  authorize: true
-  
-  function onLinkedInLoad() {
-     IN.Event.on(IN, "auth", onLinkedInAuth);
-}
 
-</script>
 <script type="in/Login">
-Hello, <?js= firstName ?> <?js= lastName ?>.
+<!-- Hello, <?js= firstName ?> <?js= lastName ?>. -->
 </script>
 
-
+<div id="profiles"></div>
 
   </body>
 </html>
