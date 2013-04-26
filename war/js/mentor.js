@@ -12,9 +12,8 @@ function onLinkedInLoad() {
 function onLinkedInAuth() {
 	  IN.API.Connections("me")
 	    .fields("firstName", "lastName", "industry")
-	    .params({"start": 0, "count": 15}) // start begins at 0
 	    .result(displayConnections)
-	    .error(displayConnectionErrors);
+	    .error(displayConnectionsErrors);
 	}
 
 // Connections
@@ -44,7 +43,11 @@ function setConnections(connections) {
 	}
 
 
-function displayConnectionsErrors(error) { /* do nothing */ }
+function displayConnectionsErrors(error) { 
+	profilesDiv = document.getElementById("connections");
+profilesDiv.innerHTML = "<p>Oops! Error in Connections!</p>";
+console.log(error); 
+}
 	
 // Profiles
 function displayProfiles(profiles) {
