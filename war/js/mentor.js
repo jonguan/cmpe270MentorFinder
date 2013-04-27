@@ -12,15 +12,14 @@ function onLinkedInLoad() {
 
 function onLinkedInAuth() {
 	IN.API.Profile("me")
-	.fields("firstName", "lastName", "positions", "industry")
+	.fields("firstName", "lastName", "positions", "industry", "headline")
 	.result(displayProfiles);
 	
 	 
 	}
 // Self
 function searchTitle(member){
-	console.log("Hello Jon");
-	console.log(member.headline);
+	console.log(member);
 	
 	 IN.API.PeopleSearch()
 	  .fields("firstName", "lastName", "positions", "industry")
@@ -37,7 +36,7 @@ function displayConnections(connections) {
 	  var members = connections.values; // The list of members you are connected to
 	  for (var member in members) {
 	    connectionsDiv.innerHTML += "<p>" + members[member].firstName + " " + members[member].lastName
-	      + " works in the " + members[member].industry + " industry";
+	      + " works in the " + members[member].industry + " industry" ;
 	  }     
 	}
 
@@ -87,15 +86,20 @@ function displayProfilesErrors(error) {
 
 // People Search
 function displayPeopleSearch(peopleSearch) {
-	console.log("people search");
+	
 	  var peopleSearchDiv = document.getElementById("peoplesearch");
 	     
 	  var members = peopleSearch.people.values; // people are stored in a different spot than earlier example
+	  
+	  console.log(members);
+	  
 	  for (var member in members) {
 	    // but inside the loop, everything is the same
 	    // extract the title from the members first position
 	    peopleSearchDiv.innerHTML += "<p>" + members[member].firstName + " " + members[member].lastName 
-	      + " is a " + members[member].positions.values[0].title + "</p>";
+	      + " is a " + members[member].positions.values[0].title + " in " + members[member].industry 
+	      + " at " 
+	      + members[member].positions.values[0].company.name +".</p>";
 	  }
 	}
 
