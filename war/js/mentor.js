@@ -1,15 +1,10 @@
  
-
-  
-
 // Load
 function onLinkedInLoad() {
      IN.Event.on(IN, "auth", onLinkedInAuth);
 }
 
 //Authorization
-
-
 function onLinkedInAuth() {
 	IN.API.Profile("me")
 	.fields("firstName", "lastName", "positions", "industry")
@@ -19,11 +14,9 @@ function onLinkedInAuth() {
 	}
 // Self
 function searchTitle(member){
-	console.log("Hello Jon");
-	console.log(member.headline);
 	
 	 IN.API.PeopleSearch()
-	  .fields("firstName", "lastName", "positions", "industry")
+	  .fields("firstName", "lastName", "positions", "industry", "siteStandardProfileRequest","public-profile-url")
 	  .params({"keywords": member.headline })
 	  .result(displayPeopleSearch)
 	  .error(displayPeopleSearchError);
@@ -87,16 +80,23 @@ function displayProfilesErrors(error) {
 
 // People Search
 function displayPeopleSearch(peopleSearch) {
-	console.log("people search");
-	  var peopleSearchDiv = document.getElementById("peoplesearch");
-	     
-	  var members = peopleSearch.people.values; // people are stored in a different spot than earlier example
-	  for (var member in members) {
-	    // but inside the loop, everything is the same
-	    // extract the title from the members first position
-	    peopleSearchDiv.innerHTML += "<p>" + members[member].firstName + " " + members[member].lastName 
-	      + " is a " + members[member].positions.values[0].title + "</p>";
-	  }
+	
+    // Loop through the people returned
+    var members = peopleSearch.people.values;
+    var resultsHtml = "";
+    for (var member in members) {
+
+        // Look through result to make name and url.
+        var nameText = members[member].firstName + " " + members[member].lastName;
+        var url = members[member].publicProfileUrl;
+        console.log(url);
+        resultsHtml += '<sc'+'ript type="IN/MemberProfile" data-id="'+url+'" data-format="inline"></sc'+'ript>';        
+    }
+    $('#peopleSearch').append(resultsHtml);
+    //the below statement needs to be explicitly called to interpret and parse
+    //the inline script tags as the linked in api parses the dom onle on load.
+    IN.parse($("#peopleSearch")[0]);
+	  
 	}
 
 function displayPeopleSearchError(error){
