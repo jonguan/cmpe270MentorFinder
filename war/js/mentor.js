@@ -11,12 +11,24 @@ function onLinkedInLoad() {
 
 
 function onLinkedInAuth() {
-	  IN.API.Connections("me")
-	    .fields("firstName", "lastName", "industry")
-	    .params({"start": 10, "count": 5 }) // start begins at 0
-	    .result(setConnections)
-	    .error(displayConnectionsErrors);
+	IN.API.Profile("me")
+	.fields("firstName", "lastName", "positions", "industry")
+	.result(displayProfiles);
+	
+	 
 	}
+// Self
+function searchTitle(member){
+	console.log("Hello Jon");
+	console.log(member.headline);
+	
+	 IN.API.PeopleSearch()
+	  .fields("firstName", "lastName", "positions", "industry")
+	  .params({"keywords": member.headline })
+	  .result(displayPeopleSearch)
+	  .error(displayPeopleSearchError);
+	}
+
 
 // Connections
 function displayConnections(connections) {
@@ -60,6 +72,9 @@ function displayProfiles(profiles) {
 	    profilesDiv.innerHTML += "<p>" + members[member].firstName + " " + members[member].lastName 
 	      + " works in the " + members[member].industry + " industry.";
 	  }
+	  
+	  searchTitle(members[0]);
+	  
 	}
 
 
@@ -69,3 +84,23 @@ function displayProfilesErrors(error) {
 	  console.log(error);
 	}
 	   
+
+// People Search
+function displayPeopleSearch(peopleSearch) {
+	console.log("people search");
+	  var peopleSearchDiv = document.getElementById("peoplesearch");
+	     
+	  var members = peopleSearch.people.values; // people are stored in a different spot than earlier example
+	  for (var member in members) {
+	    // but inside the loop, everything is the same
+	    // extract the title from the members first position
+	    peopleSearchDiv.innerHTML += "<p>" + members[member].firstName + " " + members[member].lastName 
+	      + " is a " + members[member].positions.values[0].title + "</p>";
+	  }
+	}
+
+function displayPeopleSearchError(error){
+	 profilesDiv = document.getElementById("errors");
+	  profilesDiv.innerHTML = "<p>Oops! An invalid people search was detected!</p>";
+	  console.log(error);
+	}
