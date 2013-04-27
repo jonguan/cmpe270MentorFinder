@@ -9,10 +9,12 @@ function onLinkedInLoad() {
 
 //Authorization
 
+
 function onLinkedInAuth() {
 	  IN.API.Connections("me")
 	    .fields("firstName", "lastName", "industry")
-	    .result(displayConnections)
+	    .params({"start": 10, "count": 5 }) // start begins at 0
+	    .result(setConnections)
 	    .error(displayConnectionsErrors);
 	}
 
@@ -33,7 +35,7 @@ function setConnections(connections) {
 
 	  var start = connections._start + 1; // because humans count from 1, not 0.
 	  var range = connections._start + connections._count;
-	  connectionsDiv.innerHTML = "<p>Displaying " + start + "-" + range + " of " + connections._total + " connections.</p>";
+	  profileDiv.innerHTML = "<p>Displaying " + start + "-" + range + " of " + connections._total + " connections.</p>";
 
 	  var members = connections.values;
 	  for (var member in members) {
