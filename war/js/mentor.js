@@ -1,10 +1,12 @@
  
 // Load
+////////////////////////////////////////////////////
 function onLinkedInLoad() {
      IN.Event.on(IN, "auth", onLinkedInAuth);
 }
 
 //Authorization
+////////////////////////////////////////////////////
 function onLinkedInAuth() {
 	IN.API.Profile("me")
 	.fields("firstName", "lastName", "positions", "industry", "headline")
@@ -12,7 +14,9 @@ function onLinkedInAuth() {
 	
 	 
 	}
+
 // Self
+////////////////////////////////////////////////////
 function searchTitle(member){
 	
 	 IN.API.PeopleSearch()
@@ -24,6 +28,7 @@ function searchTitle(member){
 
 
 // Connections
+////////////////////////////////////////////////////
 function displayConnections(connections) {
 	  var connectionsDiv = document.getElementById("connections");
 
@@ -57,6 +62,7 @@ console.log(error);
 }
 	
 // Profiles
+////////////////////////////////////////////////////
 function displayProfiles(profiles) {
 	  var profilesDiv = document.getElementById("profiles");
 
@@ -79,6 +85,7 @@ function displayProfilesErrors(error) {
 	   
 
 // People Search
+////////////////////////////////////////////////////
 function displayPeopleSearch(peopleSearch) {
 
     // Loop through the people returned
