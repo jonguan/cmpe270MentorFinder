@@ -18,8 +18,11 @@ function onLinkedInLoad() {
  */
 
 function onLinkedInAuth() {
-	$('#searchBar').html('<input style' + '="height: 24px;" class="box17" type="text" size="40">' +
+	$('#searchBar').html('<input id="textSearch" type="text" style="height: 24px;" class="box17" type="text" size="40"' +
+'onkeydown="if (event.keyCode == 13) resetSearch()"' +'>' +
 	' <button onclick="resetSearch()">Search Mentor</button></input>');
+//	$('#textSearch').keydown(resetSearch());
+
 	IN.API.Profile("me")
 	.fields("firstName", "lastName", "id", "positions", "industry", "headline")
 	.result(displayProfiles);	 
@@ -39,18 +42,29 @@ function prev(){
 }
 
 function resetSearch(){
+	console.log("reset search");
 	page = 0;
 	searchTitle();
 }
 
 function searchTitle(member){
+	if(memberSelf == null)
+	{
+		return;
+	}
 	console.log(member);
 	if(member == null){
 		member = memberSelf;
 	}
+
 	var keywords = $('input').val();
 	if(keywords == ""){
 		keywords = member.headline;
+	}
+
+	if(keywords == "")
+	{
+		return;
 	}
 
 	console.log(keywords);
@@ -103,6 +117,7 @@ function displayConnectionsErrors(error) {
  * Profiles
  */
 function displayProfiles(profiles) {
+	console.log("display profiles");
 	var profilesDiv = document.getElementById("profiles");
 
 	var members = profiles.values;
