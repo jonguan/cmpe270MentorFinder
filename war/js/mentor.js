@@ -10,9 +10,7 @@ function onLinkedInLoad() {
 function onLinkedInAuth() {
 	IN.API.Profile("me")
 	.fields("firstName", "lastName", "positions", "industry", "headline")
-	.result(displayProfiles);
-	
-	 
+	.result(displayProfiles);	 
 	}
 
 // Self
@@ -21,7 +19,7 @@ function searchTitle(member){
 	
 	 IN.API.PeopleSearch()
 	  .fields("firstName", "lastName", "positions", "industry", "siteStandardProfileRequest","public-profile-url")
-	  .params({"keywords": member.headline })
+	  .params({"keywords":  $('input').val()})
 	  .result(displayPeopleSearch)
 	  .error(displayPeopleSearchError);
 	}
@@ -87,7 +85,7 @@ function displayProfilesErrors(error) {
 // People Search
 ////////////////////////////////////////////////////
 function displayPeopleSearch(peopleSearch) {
-
+	$('#peopleSearch').html("");
     // Loop through the people returned
     var members = peopleSearch.people.values;
     var resultsHtml = "";
@@ -96,8 +94,7 @@ function displayPeopleSearch(peopleSearch) {
         // Look through result to make name and url.
         var nameText = members[member].firstName + " " + members[member].lastName;
         var url = members[member].publicProfileUrl;
-        console.log(url);
-        resultsHtml += '<sc'+'ript type="IN/MemberProfile" data-id="'+url+'" data-format="inline"></sc'+'ript>';        
+        resultsHtml += '<sc'+'ript type="IN/MemberProfile" data-id="'+url+'" data-format="inline" data-related="false"></sc'+'ript>';        
     }
     $('#peopleSearch').append(resultsHtml);
     //the below statement needs to be explicitly called to interpret and parse
