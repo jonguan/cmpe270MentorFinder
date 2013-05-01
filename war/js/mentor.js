@@ -19,13 +19,47 @@ function onLinkedInLoad() {
 
 function onLinkedInAuth() {
 	$('#searchBar').html('<input id="textSearch" type="text" style="height: 24px;" class="box17" type="text" size="40"' +
-'onkeydown="if (event.keyCode == 13) resetSearch()"' +'>' +
+			'onkeydown="if (event.keyCode == 13) resetSearch()"' +'>' +
 	' <button onclick="resetSearch()">Search Mentor</button></input>');
 //	$('#textSearch').keydown(resetSearch());
 
 	IN.API.Profile("me")
 	.fields("firstName", "lastName", "id", "positions", "industry", "headline")
 	.result(displayProfiles);	 
+}
+
+
+function logoutCapture(){  
+	console.log("Logout");
+	IN.User.logout();     
+//	IN.User.setNotAuthorized();
+//	clearCookies();
+	clearPage();
+}
+
+function clearCookies(){
+	console.log(document.cookie);
+	var cookies = document.cookie.split(";");
+
+	for (var i = 0; i < cookies.length; i++) {
+		var cookie = cookies[i];
+		var eqPos = cookie.indexOf("=");
+		var name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
+		document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
+	}
+//	document.cookie = encodeURIComponent("IN_HASH") + "=deleted; expires=" + new Date(0).toUTCString();
+
+}
+
+/*
+ * Clear
+ */
+function clearPage(){
+	$('#searchBar').html("");
+	$('#profiles').html("");
+	$('#peopleSearch').html("");
+	$('#connections').html("");
+	$('#errors').html("");
 }
 
 /*
@@ -123,15 +157,18 @@ function displayProfiles(profiles) {
 	var members = profiles.values;
 	for (var member in members) {
 		profilesDiv.innerHTML += "<p>Recommended mentors for " + members[member].firstName + " " + 
-		members[member].lastName + ":</p>"; 
+		members[member].lastName + ":</p>";
 		/*  + " in the " + members[member].industry + " industry.";*/
 	}
+	profilesDiv.innerHTML += '<p>Not you? ' + '<a href="javascript:void(0)" onClick="logoutCapture()">Logout</a> </p>'; 
 
 	memberSelf = members[0];
 	memberId = memberSelf.id;
 	searchTitle(memberSelf);
 
 }
+
+
 
 
 function displayProfilesErrors(error) {
