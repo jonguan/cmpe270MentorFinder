@@ -5,7 +5,7 @@
 h1 {
   font-size: 2em;
   font-weight: bold;
-  color: #777777;
+/**  color: #777777;*/
   margin: 40px 0px 70px;
   text-align: center;
 }
@@ -47,6 +47,15 @@ border-radius: 5px;
 -webkit-box-shadow: 5px 5px black;
 box-shadow: 5px 5px black;
 }
+
+body{
+background: -webkit-gradient(radial, 0 50%, 0 100%, from(azure), to(white));
+background: -webkit-radial-gradient(top, azure, azure, white);
+background: -moz-radial-gradient(top, azure, azure, white);
+background: -ms-radial-gradient(top, azure, azure, white);
+background: radial-gradient(to bottom, azure, azure, white);
+}
+
 
 
 
