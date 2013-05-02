@@ -2,6 +2,7 @@
  * Global variables
  */
 var memberSelf;
+var memberId;
 var start = 0;
 var page = 0;
 var numPerPage = 20;
@@ -189,7 +190,18 @@ function displayPeopleSearch(peopleSearch) {
 	var start = peopleSearch.people._start + 1; // because humans count from 1, not 0.
 	var range = peopleSearch.people._start + peopleSearch.people._count;
 	var total = peopleSearch.people._total;
-	var resultsHtml = "<p>Displaying " + start + "-" + range + " of " + total + " results.</p>";
+	var resultsHtml = "";
+
+	
+	if (start >= 0 && range >= 0)
+	{
+		resultsHtml += "<p>Displaying " + start + "-" + range + " of " + total + " results.</p>";	
+	}
+	else if(total >= 0)
+		{
+		resultsHtml += "<p>Displaying " + total + " results.</p>";	
+		}
+
 	if(page > 0){
 		resultsHtml += '<button onclick="prev()">Prev</button>';		
 	}
@@ -201,14 +213,19 @@ function displayPeopleSearch(peopleSearch) {
 
 	for (var member in members) {
 
-//		if(members[member].id != memberId)
-//		{
-		// Look through result to make name and url.
-		var nameText = members[member].firstName + " " + members[member].lastName;
-//		resultsHtml += '<p>' + nameText	+ ' works in the ' + members[member].industry + ' industry.</p>';
-		var url = members[member].publicProfileUrl;
-		resultsHtml += '<sc'+'ript type="IN/MemberProfile" data-id="'+url+'" data-format="inline" data-related="false"></sc'+'ript>';        
-//		}
+		if(members[member].id != memberId)
+		{
+			// Look through result to make name and url.
+			var nameText = members[member].firstName + " " + members[member].lastName;
+//			resultsHtml += '<p>' + nameText	+ ' works in the ' + members[member].industry + ' industry.</p>';
+			var url = members[member].publicProfileUrl;
+//			if (url == null)
+//			{
+//			url = members[member].siteStandardProfileRequest.url;
+//			}
+//			resultsHtml += '<p>url = ' + url + '</p>';
+			resultsHtml += '<script type="IN/MemberProfile" data-id="'+url+'" data-format="inline" data-related="false"></script>';        
+		}
 	}
 
 	$('#peopleSearch').append(resultsHtml);
